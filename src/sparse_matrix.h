@@ -7,6 +7,6 @@ namespace my {
     class sparse_matrix
     {
 	
-    }
+    };
 
 }
