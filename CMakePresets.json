@@ -1,0 +1,69 @@
+{
+    "version": 3,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 20,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "default",
+            "description": "Base preset",
+            "binaryDir": "${sourceDir}/build",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "MSVC",
+            "hidden": false,
+            "inherits": ["default"],
+            "generator": "Visual Studio 2022",
+            "binaryDir": "${sourceDir}/out/build/${configuration}-${architecture}",
+            "cacheVariables": {
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${configuration}-${architecture}",
+                "CMAKE_C_COMPILER": "cl",
+                "CMAKE_CXX_COMPILER": "cl",
+                "CMAKE_CXX_FLAGS": "/W4"
+            }
+        },
+        {
+            "name": "GCC",
+            "hidden": false,
+            "inherits": ["default"],
+            "generator": "Ninja",
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "gcc",
+                "CMAKE_CXX_COMPILER": "g++",
+                "CMAKE_CXX_FLAGS": "-Wall -Wextra -Wpedantic -Werror"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "MSVC-debug",
+            "displayName": "Visual Studio 2022 - Debug",
+            "configurePreset": "MSVC",
+            "configuration": "Debug"
+        },
+        {
+            "name": "MSVC-release",
+            "displayName": "Visual Studio 2022 - Release",
+            "configurePreset": "MSVC",
+            "configuration": "Release"
+        },
+        {
+            "name": "GCC-debug",
+            "displayName": "GCC & Ninja - Debug",
+            "configurePreset": "GCC",
+            "configuration": "Debug"
+        },
+        {
+            "name": "GCC-release",
+            "displayName": "GCC & Ninja - Release",
+            "configurePreset": "GCC",
+            "configuration": "Release"
+        }
+    ]
+}
