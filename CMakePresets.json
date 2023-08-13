@@ -1,69 +1,113 @@
 {
-    "version": 3,
-    "cmakeMinimumRequired": {
-        "major": 3,
-        "minor": 20,
-        "patch": 0
+  "version": 3,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 20,
+    "patch": 0
+  },
+
+
+
+  "configurePresets": [
+    {
+      "name": "windows-base",
+      "hidden": true,
+      "generator": "Visual Studio 17 2022",
+      "binaryDir": "${sourceDir}/out/build/${presetName}",
+      "installDir": "${sourceDir}/out/install/${presetName}",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "cl.exe",
+        "CMAKE_CXX_COMPILER": "cl.exe",
+        "CMAKE_CXX_FLAGS": "/W4"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
     },
-    "configurePresets": [
-        {
-            "name": "default",
-            "description": "Base preset",
-            "binaryDir": "${sourceDir}/build",
-            "hidden": true,
-            "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Debug"
-            }
-        },
-        {
-            "name": "MSVC",
-            "hidden": false,
-            "inherits": ["default"],
-            "generator": "Visual Studio 2022",
-            "binaryDir": "${sourceDir}/out/build/${configuration}-${architecture}",
-            "cacheVariables": {
-                "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${configuration}-${architecture}",
-                "CMAKE_C_COMPILER": "cl",
-                "CMAKE_CXX_COMPILER": "cl",
-                "CMAKE_CXX_FLAGS": "/W4"
-            }
-        },
-        {
-            "name": "GCC",
-            "hidden": false,
-            "inherits": ["default"],
-            "generator": "Ninja",
-            "cacheVariables": {
-                "CMAKE_C_COMPILER": "gcc",
-                "CMAKE_CXX_COMPILER": "g++",
-                "CMAKE_CXX_FLAGS": "-Wall -Wextra -Wpedantic -Werror"
-            }
-        }
-    ],
-    "buildPresets": [
-        {
-            "name": "MSVC-debug",
-            "displayName": "Visual Studio 2022 - Debug",
-            "configurePreset": "MSVC",
-            "configuration": "Debug"
-        },
-        {
-            "name": "MSVC-release",
-            "displayName": "Visual Studio 2022 - Release",
-            "configurePreset": "MSVC",
-            "configuration": "Release"
-        },
-        {
-            "name": "GCC-debug",
-            "displayName": "GCC & Ninja - Debug",
-            "configurePreset": "GCC",
-            "configuration": "Debug"
-        },
-        {
-            "name": "GCC-release",
-            "displayName": "GCC & Ninja - Release",
-            "configurePreset": "GCC",
-            "configuration": "Release"
-        }
-    ]
+    {
+      "name": "linux-base",
+      "hidden": true,
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "gcc",
+        "CMAKE_CXX_COMPILER": "g++",
+        "CMAKE_CXX_FLAGS": "-Wall -Wextra -Wpedantic -Werror"
+      }
+    },
+
+
+
+    {
+      "name": "msvc-debug",
+      "displayName": "MSVC Debug",
+      "inherits": [ "windows-base" ],
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "msvc-release",
+      "displayName": "MSVC Release",
+      "inherits": [ "windows-base" ],
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+
+
+
+    {
+      "name": "gcc-debug",
+      "displayName": "GCC Debug",
+      "inherits": [ "linux-base" ],
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "gcc-release",
+      "displayName": "GCC Release",
+      "inherits": [ "linux-base" ],
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    }
+  ],
+
+
+
+
+
+  "buildPresets": [
+    {
+      "name": "msvc-debug",
+      "displayName": "MSVC Debug",
+      "configurePreset": "msvc-debug",
+      "configuration": "Debug"
+    },
+    {
+      "name": "msvc-release",
+      "displayName": "MSVC Release",
+      "configurePreset": "msvc-release",
+      "configuration": "Release"
+    },
+ 
+
+
+    {
+      "name": "gcc-debug",
+      "displayName": "GCC Debug",
+      "configurePreset": "gcc-debug",
+      "configuration": "Debug"
+    },
+    {
+      "name": "gcc-release",
+      "displayName": "GCC Release",
+      "configurePreset": "gcc-release",
+      "configuration": "Release"
+    }
+  ]
 }
