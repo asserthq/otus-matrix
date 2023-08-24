@@ -38,6 +38,10 @@ int main()
     //std::cout << mat.at(7, 5) << '\n';
     //std::cout << mat.at(1, 2) << '\n';
     //std::cout << mat.at(0, 7) << '\n';
+
+    std::array<int, 3> arr = {-7}; 
+    auto k = std::ranges::empty(arr);
+    std::cout << k;
 	
     return 0;
 }
