@@ -14,9 +14,30 @@ int main()
 	std::cout << a << '\n';
 
     my::sparse_matrix<int> mat(-1);
-    std::cout << mat.at(7, 5) << '\n';
-    std::cout << mat.at(1, 2) << '\n';
-    std::cout << mat.at(0, 7) << '\n';
+
+    int val = mat[1][7];
+
+    std::cout << val << '\n';
+
+    val = 35;
+
+    std::cout << (mat[1][7] = mat[5][5] = 5) << '\n';
+
+    std::cout << mat[1][7] << '\n';
+
+    mat.set_default_value(100);
+
+    std::cout << mat[5][5] << '\n';
+
+    std::cout << mat[1][1] << '\n';
+
+    mat[5][5] = -1;
+    
+    std::cout << mat[5] << '\n';
+
+    //std::cout << mat.at(7, 5) << '\n';
+    //std::cout << mat.at(1, 2) << '\n';
+    //std::cout << mat.at(0, 7) << '\n';
 	
     return 0;
 }
